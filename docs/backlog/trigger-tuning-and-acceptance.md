@@ -3,10 +3,7 @@ status: open
 priority: high
 acceptance: >
   goal-definer triggers on at least 7 of 10 should-trigger prompts in
-  evals/trigger-goal-definer.json with no false triggers; the live
-  end-to-end test (definer interview -> fresh session -> pasted
-  `/goal @docs/backlog/goal-<slug>.md ...` starts and is evaluated) passes on
-  a real project.
+  evals/trigger-goal-definer.json with no false triggers.
 ---
 
 # Trigger tuning and live acceptance
@@ -26,8 +23,11 @@ State on 2026-10-14:
 - `/goal @file` was tested: `@` is not expanded inside `/goal` (ADR 0002),
   the "Read it first" wording makes the goal work anyway.
 
+- Live acceptance on a real project passed (user, 2026-10-14): interview
+  questions good, goal file stored under docs/backlog, pasted `/goal` line
+  works.
+
 Remaining:
 
-1. Run the tuning loop for goal-definer and re-measure.
-2. Live acceptance on a real project (user-driven, needs a human to answer
-   the interview).
+1. Run the tuning loop for goal-definer and re-measure; apply the best
+   description only if it scores higher on the held-out prompts.
