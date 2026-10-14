@@ -5,28 +5,31 @@ A Claude Code plugin for writing strong `/goal` conditions.
 `/goal <condition>` keeps Claude working until a separate evaluator model
 judges the condition met. That evaluator sees only the condition and the
 transcript, so vague goals spin or stop early. This plugin interviews you,
-researches the project first, and writes a validated goal to `NEXTGOAL.md`. A
-fresh session then picks it up.
+researches the project first, and writes a validated goal as a normal backlog
+item, `docs/backlog/goal-<slug>.md`.
 
-## Skills
+## Skill
 
-| Skill        | Command          | Also triggers on                               | What it does                                                          |
-|--------------|------------------|------------------------------------------------|-----------------------------------------------------------------------|
-| goal-definer | `/goal-definer`  | "define a goal", "write a /goal", "NEXTGOAL"   | Recon, validation, interview rounds, writes and lints NEXTGOAL.md     |
-| goal-runner  | `/goal-runner`   | "run the next goal", "start NEXTGOAL"          | Pre-flight checks, confirmation, loads the brief, prints the /goal line |
+| Skill        | Command         | Also triggers on                              | What it does                                                              |
+|--------------|-----------------|-----------------------------------------------|---------------------------------------------------------------------------|
+| goal-definer | `/goal-definer` | "define a goal", "write a /goal", "prepare a goal" | Recon, validation, interview rounds, writes and lints the goal file, prints the `/goal` line |
 
-Full names are `/goal-definer:goal-definer` and `/goal-definer:goal-runner`;
-the short names work as long as no other skill shares them.
+The full name is `/goal-definer:goal-definer`; the short name works as long as
+no other skill shares it.
 
 ## Workflow
 
 1. `/goal-definer fix the login timeout bug` and answer the questions.
-2. `/clear` (or start a new `claude` session).
-3. `/goal-runner`, confirm, then paste the printed `/goal ...` line.
-4. Switch to auto mode for an unattended run.
+2. Start a fresh session (`/clear` or a new `claude`).
+3. Paste the printed line:
+   `/goal @docs/backlog/goal-<slug>.md Read it first, then work until its Condition holds. Show each check's output. Stop at the turn limit it names.`
+4. Switch to auto mode first for an unattended run.
+5. When the goal is met, the session asks whether to delete the goal file.
+   Deleting is fine; git history keeps it if it was committed.
 
-A skill can't run the built-in `/goal` itself, so step 3 ends with one paste.
-The reasoning is in [docs/adr/0001-plugin-with-nextgoal-handoff.md](docs/adr/0001-plugin-with-nextgoal-handoff.md).
+A skill can't run the built-in `/goal` itself, so step 3 is one paste. The
+reasoning is in [docs/adr/0002-single-skill-goal-file-in-backlog.md](docs/adr/0002-single-skill-goal-file-in-backlog.md)
+(which supersedes part of [0001](docs/adr/0001-plugin-with-nextgoal-handoff.md)).
 
 ## Install
 
@@ -48,7 +51,7 @@ claude plugin install goal-definer@goal-definer-marketplace
 ```bash
 uv run pytest                          # validator tests
 claude plugin validate --strict .      # manifest + skill frontmatter
-python scripts/validate_goal.py NEXTGOAL.md
+python scripts/validate_goal.py docs/backlog/goal-<slug>.md
 ```
 
 Skill evals (skill-creator method) live in `evals/`: `evals.json` holds the

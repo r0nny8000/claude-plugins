@@ -1,6 +1,6 @@
 [
   {"query": "i want claude to keep working on the auth migration until all tests pass, can you help me write the /goal for that", "should_trigger": true},
-  {"query": "prepare a NEXTGOAL for the flaky checkout tests in tests/e2e so I can kick it off tomorrow in a clean session", "should_trigger": true},
+  {"query": "prepare a goal file for the flaky checkout tests in tests/e2e so I can kick it off tomorrow in a clean session", "should_trigger": true},
   {"query": "help me define a completion condition so claude can grind through docs/backlog/ issues labeled 'cleanup' on its own", "should_trigger": true},
   {"query": "my last /goal ran 40 turns and never finished, the condition was 'make the api faster'. help me write a better one for the same thing", "should_trigger": true},
   {"query": "Define a goal: split src/billing/invoice.py (1800 lines) into modules under 300 lines each, then I'll run it autonomously", "should_trigger": true},

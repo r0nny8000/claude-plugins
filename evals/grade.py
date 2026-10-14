@@ -29,8 +29,9 @@ def read(path):
 
 
 def goal_file(outputs):
-    if (outputs / "NEXTGOAL.md").exists():
-        return outputs / "NEXTGOAL.md"
+    named = sorted(outputs.glob("goal-*.md"))
+    if named:
+        return named[0]
     candidates = [p for p in outputs.glob("*.md") if p.name not in AUX_FILES]
     return candidates[0] if candidates else None
 
@@ -43,8 +44,9 @@ def grade_definer(eval_name, outputs, repo):
     results = []
     status = subprocess.run(["git", "status", "--short"], cwd=repo,
                             capture_output=True, text=True).stdout.rstrip()
-    leftovers = [line for line in status.splitlines() if line != "?? NEXTGOAL.md"]
-    results.append(check("Tree the goal starts from is clean (only NEXTGOAL.md may be untracked)",
+    leftovers = [line for line in status.splitlines()
+                 if not line.startswith("?? docs/backlog/goal-")]
+    results.append(check("Tree the goal starts from is clean (only the goal file may be untracked)",
                          not leftovers, f"git status: {status!r}"))
     goal = goal_file(outputs)
     goal_text = read(goal) if goal else ""
@@ -53,7 +55,8 @@ def grade_definer(eval_name, outputs, repo):
     # Baselines may put the condition only in their message; search everything then.
     condition_or_all = condition or (goal_text + "\n" + final)
 
-    results.append(check("NEXTGOAL.md written", goal and goal.name == "NEXTGOAL.md",
+    results.append(check("Goal written as docs/backlog/goal-<slug>.md",
+                         goal and goal.name.startswith("goal-"),
                          f"goal file: {goal.name if goal else 'none'}"))
 
     if goal:
@@ -93,41 +96,13 @@ def grade_definer(eval_name, outputs, repo):
     return results
 
 
-def grade_runner(outputs, repo):
-    final = read(outputs / "final_message.md")
-    expected = subprocess.run(
-        [sys.executable, str(VALIDATOR), str(repo / "NEXTGOAL.md"), "--print-condition"],
-        capture_output=True, text=True,
-    ).stdout.strip()
-    status = subprocess.run(["git", "status", "--short"], cwd=repo,
-                            capture_output=True, text=True).stdout.rstrip()
-    lower = final.lower()
-    return [
-        check("Paste line is '/goal ' + the exact validated condition",
-              f"/goal {expected}" in final, "exact match" if f"/goal {expected}" in final else "no exact match"),
-        check("Flags the dirty working tree",
-              any(w in lower for w in ("dirty", "uncommitted", "not clean", "modified")),
-              "keyword search in final message"),
-        check("Flags running on main", "main" in lower, "keyword search in final message"),
-        check("Prints the goal brief (guardrails visible)", "guardrails" in lower,
-              "keyword search in final message"),
-        check("Repo left unchanged apart from the fixture's README edit",
-              # uv.lock appears whenever a run calls `uv run`; that's not an edit.
-              set(status.splitlines()) <= {" M README.md", "?? NEXTGOAL.md", "?? uv.lock"},
-              f"git status: {status!r}"),
-    ]
-
-
 def main(iteration):
     iteration = Path(iteration)
     for eval_dir in sorted(iteration.glob("eval-*")):
         eval_name = json.loads((eval_dir / "eval_metadata.json").read_text())["eval_name"]
         for run_dir in sorted(eval_dir.glob("*/run-*")):
             outputs = run_dir / "outputs"
-            if eval_name.startswith("runner-"):
-                results = grade_runner(outputs, run_dir / "repo")
-            else:
-                results = grade_definer(eval_name, outputs, run_dir / "repo")
+            results = grade_definer(eval_name, outputs, run_dir / "repo")
             passed = sum(r["passed"] for r in results)
             grading = {
                 "expectations": results,

@@ -8,7 +8,7 @@
     {
       "name": "goal-definer",
       "source": "./",
-      "description": "Interview-driven /goal authoring with NEXTGOAL.md handoff"
+      "description": "Interview-driven /goal authoring with a docs/backlog goal file"
     }
   ]
 }

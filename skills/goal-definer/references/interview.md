@@ -44,5 +44,5 @@ Prefer concrete options drawn from recon over open questions:
 | External system in the check                 | Offer a local or staging alternative                            |
 | No existing tests                            | Offer: write the tests first as part of the goal, with a guard  |
 | Dirty tree or on main                        | Offer to commit/stash or create a branch before handoff         |
-| Several unrelated outcomes                   | Offer to split into separate goals; keep one in NEXTGOAL.md     |
+| Several unrelated outcomes                   | Offer to split into separate goals; keep one in the goal file     |
 | Irreversible action (deploy, push, delete)   | Move to out of scope; the user does it after review             |

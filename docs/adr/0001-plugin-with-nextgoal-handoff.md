@@ -1,6 +1,6 @@
 # 0001 Plugin with NEXTGOAL.md handoff to a fresh session
 
-Status: accepted
+Status: superseded in part by 0002 (goal-runner and NEXTGOAL.md were dropped)
 Date: 2026-10-13
 
 ## Context

@@ -1,6 +1,3 @@
-# Temporary handoff file between goal-definer and goal-runner
-NEXTGOAL.md
-
 .venv/
 __pycache__/
 .pytest_cache/

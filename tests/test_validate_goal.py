@@ -14,7 +14,7 @@ GOOD_CONDITION = (
     "Or stop after 20 turns and report what remains."
 )
 
-GOOD_BRIEF = f"""# NEXTGOAL: Fix token refresh
+GOOD_BRIEF = f"""# Goal: Fix token refresh
 
 ## Goal
 
@@ -60,7 +60,7 @@ None
 
 
 def run(tmp_path, text, *args):
-    path = tmp_path / "NEXTGOAL.md"
+    path = tmp_path / "goal-fix-token-refresh.md"
     path.write_text(text)
     return subprocess.run(
         [sys.executable, str(SCRIPT), str(path), *args],
@@ -75,9 +75,23 @@ def test_good_brief_passes(tmp_path):
     assert "ERROR" not in result.stdout
 
 
+def test_no_path_argument_prints_usage(tmp_path):
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT)], capture_output=True, text=True, cwd=tmp_path
+    )
+    assert result.returncode == 2
+    assert "usage" in result.stdout.lower()
+
+
+def test_front_matter_before_first_heading_is_ignored(tmp_path):
+    front_matter = "---\nstatus: goal-ready\npriority: medium\nacceptance: tests green\n---\n"
+    result = run(tmp_path, front_matter + GOOD_BRIEF)
+    assert result.returncode == 0, result.stdout
+
+
 def test_missing_file_fails(tmp_path):
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), str(tmp_path / "NEXTGOAL.md")],
+        [sys.executable, str(SCRIPT), str(tmp_path / "goal-fix-token-refresh.md")],
         capture_output=True,
         text=True,
     )

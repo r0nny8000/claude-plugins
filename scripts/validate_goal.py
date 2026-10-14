@@ -1,9 +1,10 @@
-"""Check a NEXTGOAL.md brief before it is handed to /goal.
+"""Check a goal file (docs/backlog/goal-<slug>.md) before it is handed to /goal.
 
-Usage: python validate_goal.py [path] [--print-condition]
+Usage: python validate_goal.py <path> [--print-condition]
 
 Stdlib only, so the plugin runs it with plain `python` and no install step.
-Exit code 0 means no errors (warnings allowed), 1 means at least one error.
+Exit code 0 means no errors (warnings allowed), 1 means at least one error,
+2 means wrong usage.
 """
 
 import re
@@ -105,7 +106,10 @@ def validate(text):
 
 def main(argv):
     args = [a for a in argv if not a.startswith("--")]
-    path = Path(args[0]) if args else Path("NEXTGOAL.md")
+    if not args:
+        print("usage: validate_goal.py <goal-file> [--print-condition]")
+        return 2
+    path = Path(args[0])
 
     if not path.exists():
         print(f"ERROR: {path} not found")
