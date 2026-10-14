@@ -1,0 +1,14 @@
+{
+  "name": "goal-definer-marketplace",
+  "description": "Local marketplace for the goal-definer plugin",
+  "owner": {
+    "name": "r0nny8000"
+  },
+  "plugins": [
+    {
+      "name": "goal-definer",
+      "source": "./",
+      "description": "Interview-driven /goal authoring with NEXTGOAL.md handoff"
+    }
+  ]
+}

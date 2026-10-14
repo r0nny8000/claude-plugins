@@ -1,0 +1,61 @@
+# NEXTGOAL.md template
+
+Fill every section. `## Condition` is what gets pasted after `/goal`; the rest
+is the brief that goal-runner prints into the fresh session so Claude starts
+with full context. Keep `## Open questions` as `None` before handoff.
+
+The validator (`scripts/validate_goal.py`) parses this exact structure: the H2
+headings below, checklist items as `- [ ]`, and the condition inside the first
+fenced `text` block under `## Condition`.
+
+````markdown
+# NEXTGOAL: <short title>
+
+## Goal
+
+<One sentence: the outcome, not the steps.>
+
+## Context
+
+- Repo state: <branch, clean tree, last relevant commit>
+- Relevant files: <paths and interfaces>
+- Decisions to respect: <docs/adr/NNNN-*.md, CLAUDE.md rules>
+- Verified facts: <what the definer checked and how>
+
+## Acceptance checklist
+
+- [ ] <Criterion> — proven by `<command>` <expected result>
+- [ ] <Criterion> — proven by `<command>` <expected result>
+
+## Verification
+
+<The final end-to-end check, e.g. `uv run pytest` exits 0, and the instruction
+to show its output in the transcript.>
+
+## Guardrails
+
+- No test is deleted, skipped, or weakened to make a check pass.
+- No edits outside <paths>.
+- <Other invariants: public API, migrations, dependencies, git actions.>
+
+## Out of scope
+
+- <Things that look related but must not be done in this goal.>
+
+## Approach hints
+
+- <Optional, short. Hints, not a step list.>
+
+## Open questions
+
+None
+
+## Condition
+
+```text
+<End state> as shown by `<command>` <result>; <checklist items as one line
+each>; guardrails: <compact invariants, incl. no test deleted, skipped or
+weakened>; out of scope: <compact list>. Show the output of each check in the
+transcript. Or stop after <N> turns and report what remains.
+```
+````

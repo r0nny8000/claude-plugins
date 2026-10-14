@@ -1,0 +1,12 @@
+[project]
+name = "goal-definer"
+version = "0.1.0"
+description = "Claude Code plugin that interviews you to write strong /goal conditions"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

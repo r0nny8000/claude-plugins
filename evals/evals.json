@@ -1,0 +1,38 @@
+{
+  "skill_name": "goal-definer",
+  "fixture": "evals/fixture-tinyshop (built by evals/make_fixture.sh)",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bugfix-discount-over-100",
+      "skill": "goal-definer",
+      "prompt": "customers in tinyshop found that discount codes above 100% make the order total negative. I want claude to fix this autonomously with /goal, help me define the goal",
+      "expected_output": "NEXTGOAL.md that passes the validator, uses `uv run pytest`, references the cents ADR, guards tests, has a stop clause; questions.md shows grounded rounds",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "feature-from-backlog-csv",
+      "skill": "goal-definer",
+      "prompt": "prepare a goal for the csv export thing in the backlog so I can run it in a new session",
+      "expected_output": "NEXTGOAL.md derived from docs/backlog/csv-export.md acceptance criteria (columns id,total_cents,created_at), passes validator",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "vague-make-it-better",
+      "skill": "goal-definer",
+      "prompt": "set up a /goal that makes tinyshop's code better and more robust",
+      "expected_output": "Skill probes the subjective request, turns it into measurable criteria; condition has no subjective words; passes validator",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "runner-dirty-tree-on-main",
+      "skill": "goal-runner",
+      "prompt": "run the next goal",
+      "expected_output": "Validates NEXTGOAL.md, flags dirty tree and main branch, prints brief and a /goal line identical to --print-condition output",
+      "files": ["NEXTGOAL.md (prepared, valid)"]
+    }
+  ]
+}

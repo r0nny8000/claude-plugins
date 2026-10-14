@@ -1,0 +1,22 @@
+[
+  {"query": "i want claude to keep working on the auth migration until all tests pass, can you help me write the /goal for that", "should_trigger": true},
+  {"query": "prepare a NEXTGOAL for the flaky checkout tests in tests/e2e so I can kick it off tomorrow in a clean session", "should_trigger": true},
+  {"query": "help me define a completion condition so claude can grind through docs/backlog/ issues labeled 'cleanup' on its own", "should_trigger": true},
+  {"query": "my last /goal ran 40 turns and never finished, the condition was 'make the api faster'. help me write a better one for the same thing", "should_trigger": true},
+  {"query": "Define a goal: split src/billing/invoice.py (1800 lines) into modules under 300 lines each, then I'll run it autonomously", "should_trigger": true},
+  {"query": "can you interview me and turn 'add rate limiting to the public api' into a goal claude can run unattended in auto mode", "should_trigger": true},
+  {"query": "draft the goal condition for porting our Flask views to FastAPI, I want guardrails so it doesn't touch the db models", "should_trigger": true},
+  {"query": "set up a /goal that gets mypy --strict clean on the payments package", "should_trigger": true},
+  {"query": "I keep writing vague goals. walk me through writing one for 'upgrade pydantic v1 to v2 in services/'", "should_trigger": true},
+  {"query": "zieldefinition für /goal bitte: alle TODOs in src/ auflösen ohne public API zu ändern", "should_trigger": true},
+  {"query": "what does /goal clear do and how is it different from /clear?", "should_trigger": false},
+  {"query": "run /loop every 10 minutes to check whether the staging deploy finished", "should_trigger": false},
+  {"query": "write a Stop hook in .claude/settings.json that runs pytest and blocks until it passes", "should_trigger": false},
+  {"query": "help me write my Q4 OKRs for the platform team, three objectives with key results", "should_trigger": false},
+  {"query": "add a backlog item under docs/backlog for the csv export with acceptance criteria", "should_trigger": false},
+  {"query": "fix the typo in README.md line 12, 'recieve' should be 'receive'", "should_trigger": false},
+  {"query": "the goal evaluator said 'impossible' on my current goal, why would it do that? here is the condition: all e2e tests pass against prod", "should_trigger": false},
+  {"query": "write an ADR for choosing postgres over sqlite for the job queue", "should_trigger": false},
+  {"query": "implement the plan in docs/plan.md, start with step 3", "should_trigger": false},
+  {"query": "schedule a nightly routine that runs the test suite and posts failures to slack", "should_trigger": false}
+]
