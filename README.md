@@ -33,13 +33,46 @@ reasoning is in [docs/adr/0002-single-skill-goal-file-in-backlog.md](docs/adr/00
 
 ## Install
 
+### Requirements
+
+| Requirement                        | Why                                                                                       |
+|------------------------------------|-------------------------------------------------------------------------------------------|
+| Claude Code with `/goal`           | Tested on 2.1.296                                                                         |
+| Trusted folder, hooks enabled      | `/goal` is unavailable under `disableAllHooks` or `allowManagedHooksOnly`                 |
+| `python` or `python3` (3.11+)      | The goal-file linter; `scripts/validate_goal.sh` uses `python` if present, else `python3` |
+| `git` and read access to the repo  | The repo is private; Claude Code clones it with your existing git credentials            |
+
+### From GitHub
+
+The repo is private, so you need read access and a stored git credential.
+Claude Code runs `git` without prompts. Either an SSH key loaded in
+`ssh-agent` works, or HTTPS with a stored credential:
+
+```bash
+gh auth login && gh auth setup-git    # HTTPS only; skip if your SSH key works
+```
+
+Then add the marketplace and install the plugin:
+
+```bash
+claude plugin marketplace add r0nny8000/goal-definer-skill
+claude plugin install goal-definer@goal-definer-marketplace
+```
+
+Without an SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1`, or installs from
+`/plugin` and updates fail. Get new versions with
+`claude plugin update goal-definer@goal-definer-marketplace`.
+
+### From a local clone
+
 Load it for one session while developing:
 
 ```bash
 claude --plugin-dir /path/to/goal-definer-skill
 ```
 
-Install it permanently from this repo as a local marketplace:
+Or install it from the clone as a local marketplace. It then loads your
+current files at every session start:
 
 ```bash
 claude plugin marketplace add /path/to/goal-definer-skill
@@ -53,6 +86,9 @@ uv run pytest                          # validator tests
 claude plugin validate --strict .      # manifest + skill frontmatter
 python scripts/validate_goal.py docs/backlog/goal-<slug>.md
 ```
+
+To release, bump `version` in `.claude-plugin/plugin.json`. GitHub installs
+stay on their cached copy until that string changes.
 
 Skill evals (skill-creator method) live in `evals/`: `evals.json` holds the
 test prompts, `make_fixture.sh` builds the sample repo, `grade.py` scores an

@@ -2,7 +2,7 @@
 name: goal-definer
 description: Interview the user to turn a task into a strong /goal condition and write it as a backlog file docs/backlog/goal-<slug>.md. Researches the repo (git, README, CLAUDE.md, docs/adr, docs/backlog, tests) first, validates claims, then asks pick-don't-type questions about acceptance criteria, verification, guardrails, out of scope, and turn budget. Ends with a short `/goal @file ...` line to paste. Use this whenever the user wants to define, write, draft, refine, or prepare a goal, a /goal condition, or a completion condition, or wants Claude to work autonomously until something is done, even if they don't say "/goal".
 argument-hint: "[task description]"
-allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_goal.py *) Bash(git status *) Bash(git branch *)
+allowed-tools: Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/validate_goal.sh *) Bash(git status *) Bash(git branch *)
 ---
 
 # Goal definer
@@ -90,7 +90,7 @@ contradict the cleanup step.
 Then run:
 
 ```bash
-python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_goal.py docs/backlog/goal-<slug>.md
+sh ${CLAUDE_PLUGIN_ROOT}/scripts/validate_goal.sh docs/backlog/goal-<slug>.md
 ```
 
 Fix every ERROR. Discuss WARNINGs with the user only if the fix isn't obvious.
