@@ -56,4 +56,5 @@ python scripts/validate_goal.py docs/backlog/goal-<slug>.md
 
 Skill evals (skill-creator method) live in `evals/`: `evals.json` holds the
 test prompts, `make_fixture.sh` builds the sample repo, `grade.py` scores an
-iteration.
+iteration, `measure_triggers.py` checks signal-word triggering of the
+installed plugin against `trigger-goal-definer.json`.
