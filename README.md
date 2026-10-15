@@ -44,23 +44,28 @@ reasoning is in [docs/adr/0002-single-skill-goal-file-in-backlog.md](docs/adr/00
 
 ### From GitHub
 
-The repo is private, so you need read access and a stored git credential.
-Claude Code runs `git` without prompts. Either an SSH key loaded in
-`ssh-agent` works, or HTTPS with a stored credential:
+1. Get read access. The repo is private: ask r0nny8000 to add your GitHub
+   account as a collaborator, then accept the invitation.
+2. Store a git credential. Claude Code runs `git` without prompts, so a
+   credential that would need a prompt fails. Pick one:
+   - SSH: a GitHub key loaded in `ssh-agent`, with github.com in
+     `known_hosts`.
+   - HTTPS: store a credential and tell Claude Code to skip SSH. Without the
+     variable, installs from `/plugin` and updates fail.
 
-```bash
-gh auth login && gh auth setup-git    # HTTPS only; skip if your SSH key works
-```
+     ```bash
+     gh auth login && gh auth setup-git
+     export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1    # add to your shell profile
+     ```
 
-Then add the marketplace and install the plugin:
+3. Add the marketplace and install the plugin:
 
-```bash
-claude plugin marketplace add r0nny8000/goal-definer-skill
-claude plugin install goal-definer@goal-definer-marketplace
-```
+   ```bash
+   claude plugin marketplace add r0nny8000/goal-definer-skill
+   claude plugin install goal-definer@goal-definer-marketplace
+   ```
 
-Without an SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1`, or installs from
-`/plugin` and updates fail. Get new versions with
+Get new versions with
 `claude plugin update goal-definer@goal-definer-marketplace`.
 
 ### From a local clone
