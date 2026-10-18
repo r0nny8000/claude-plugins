@@ -40,25 +40,18 @@ reasoning is in [docs/adr/0002-single-skill-goal-file-in-backlog.md](docs/adr/00
 | Claude Code with `/goal`           | Tested on 2.1.296                                                                         |
 | Trusted folder, hooks enabled      | `/goal` is unavailable under `disableAllHooks` or `allowManagedHooksOnly`                 |
 | `python` or `python3` (3.11+)      | The goal-file linter; `scripts/validate_goal.sh` uses `python` if present, else `python3` |
-| `git` and read access to the repo  | The repo is private; Claude Code clones it with your existing git credentials            |
+| `git`                              | Claude Code clones the plugin from GitHub                                                 |
 
 ### From GitHub
 
-1. Get read access. The repo is private: ask r0nny8000 to add your GitHub
-   account as a collaborator, then accept the invitation.
-2. Store a git credential. Claude Code runs `git` without prompts, so a
-   credential that would need a prompt fails. Pick one:
-   - SSH: a GitHub key loaded in `ssh-agent`, with github.com in
-     `known_hosts`.
-   - HTTPS: store a credential and tell Claude Code to skip SSH. Without the
-     variable, installs from `/plugin` and updates fail.
+1. Without a GitHub SSH key in `ssh-agent`, tell Claude Code to clone over
+   HTTPS:
 
-     ```bash
-     gh auth login && gh auth setup-git
-     export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1    # add to your shell profile
-     ```
+   ```bash
+   export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1    # add to your shell profile
+   ```
 
-3. Add the marketplace and install the plugin:
+2. Add the marketplace and install the plugin:
 
    ```bash
    claude plugin marketplace add r0nny8000/goal-definer-skill
@@ -99,3 +92,7 @@ Skill evals (skill-creator method) live in `evals/`: `evals.json` holds the
 test prompts, `make_fixture.sh` builds the sample repo, `grade.py` scores an
 iteration, `measure_triggers.py` checks signal-word triggering of the
 installed plugin against `trigger-goal-definer.json`.
+
+## License
+
+MIT, see [LICENSE](LICENSE).

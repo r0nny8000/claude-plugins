@@ -8,7 +8,7 @@ vague goals spin or stop early. You want a skill that interviews you
 (AskUserQuestion), researches the project first, and writes a strong goal into
 NEXTGOAL.md. A fresh session then picks it up and runs it.
 
-Repo: /home/autobot/code/r0nny8000/goal-definer-skill. Git is initialized,
+Repo: this repo (goal-definer-skill). Git is initialized,
 there are no commits yet, and the branch is `master`.
 
 ## Research findings (verified)
