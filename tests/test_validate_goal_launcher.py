@@ -2,7 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-LAUNCHER = Path(__file__).parent.parent / "scripts" / "validate_goal.sh"
+LAUNCHER = Path(__file__).parent.parent / "plugins" / "ai-engineer" / "scripts" / "validate_goal.sh"
 
 
 def run_launcher(bin_dir):

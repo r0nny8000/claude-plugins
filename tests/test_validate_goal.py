@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-SCRIPT = Path(__file__).parent.parent / "scripts" / "validate_goal.py"
+SCRIPT = Path(__file__).parent.parent / "plugins" / "ai-engineer" / "scripts" / "validate_goal.py"
 
 GOOD_CONDITION = (
     "All tests in tests/auth pass as shown by `uv run pytest tests/auth` exiting 0; "

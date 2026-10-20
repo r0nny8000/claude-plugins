@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-VALIDATOR = ROOT / "scripts" / "validate_goal.py"
+VALIDATOR = ROOT / "plugins" / "ai-engineer" / "scripts" / "validate_goal.py"
 sys.path.insert(0, str(VALIDATOR.parent))
 from validate_goal import extract_condition, split_sections  # noqa: E402
 

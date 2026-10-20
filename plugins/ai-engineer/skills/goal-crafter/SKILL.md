@@ -1,11 +1,11 @@
 ---
-name: goal-definer
+name: goal-crafter
 description: Interview the user to turn a task into a strong /goal condition and write it as a backlog file docs/backlog/goal-<slug>.md. Researches the repo (git, README, CLAUDE.md, docs/adr, docs/backlog, tests) first, validates claims, then asks pick-don't-type questions about acceptance criteria, verification, guardrails, out of scope, and turn budget. Ends with a short `/goal @file ...` line to paste. Use this whenever the user wants to define, write, draft, refine, or prepare a goal, a /goal condition, or a completion condition, or wants Claude to work autonomously until something is done, even if they don't say "/goal".
 argument-hint: "[task description]"
 allowed-tools: Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/validate_goal.sh *) Bash(git status *) Bash(git branch *)
 ---
 
-# Goal definer
+# Goal crafter
 
 Turn a task into a goal file, `docs/backlog/goal-<slug>.md`, that `/goal` can
 run.

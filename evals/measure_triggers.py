@@ -1,4 +1,4 @@
-"""Measure whether the installed goal-definer plugin skill triggers, one run per prompt.
+"""Measure whether the installed goal-crafter plugin skill triggers, one run per prompt.
 
 Usage: python evals/measure_triggers.py <eval-set.json> <model> <out.json>
 
@@ -33,8 +33,8 @@ def triggered(query):
                 continue
             for item in message.get("content") or []:
                 if isinstance(item, dict) and item.get("type") == "tool_use":
-                    # The first tool call decides: a Skill call to goal-definer is a trigger.
-                    hit = item["name"] == "Skill" and "goal-definer" in json.dumps(item.get("input"))
+                    # The first tool call decides: a Skill call to goal-crafter is a trigger.
+                    hit = item["name"] == "Skill" and "goal-crafter" in json.dumps(item.get("input"))
                     break
             if hit is not None:
                 break

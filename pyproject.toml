@@ -1,5 +1,5 @@
 [project]
-name = "goal-definer"
+name = "claude-plugins"
 version = "0.1.0"
 description = "Claude Code plugin that interviews you to write strong /goal conditions"
 requires-python = ">=3.11"

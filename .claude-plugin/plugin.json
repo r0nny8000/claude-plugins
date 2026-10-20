@@ -1,9 +1,0 @@
-{
-  "name": "goal-definer",
-  "description": "Interview-driven /goal authoring: research the project, write a goal file under docs/backlog, hand over a short /goal line",
-  "version": "0.1.0",
-  "license": "MIT",
-  "author": {
-    "name": "r0nny8000"
-  }
-}

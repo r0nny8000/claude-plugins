@@ -1,14 +1,14 @@
 {
-  "name": "goal-definer-marketplace",
-  "description": "Marketplace for the goal-definer plugin",
+  "name": "r0nny8000-plugins",
+  "description": "Claude Code plugins by r0nny8000",
   "owner": {
     "name": "r0nny8000"
   },
   "plugins": [
     {
-      "name": "goal-definer",
-      "source": "./",
-      "description": "Interview-driven /goal authoring with a docs/backlog goal file"
+      "name": "ai-engineer",
+      "source": "./plugins/ai-engineer",
+      "description": "AI engineering skills: goal-crafter for interview-driven /goal authoring"
     }
   ]
 }
