@@ -8,6 +8,7 @@ with its own skills and version.
 | Plugin                                   | Skills       | What it does                                                        |
 |------------------------------------------|--------------|---------------------------------------------------------------------|
 | [ai-engineer](plugins/ai-engineer/)      | goal-crafter | Crafts strong `/goal` conditions from an interview and writes them as backlog files |
+| [finance](plugins/finance/)              | scalable-cli | Scaffold for the Scalable Capital broker CLI `sc`, with links to its docs |
 
 The plugins target Claude Code: the terminal, the IDE extensions, and the
 desktop app's Code tab. They are not meant for claude.ai chat.
@@ -84,6 +85,7 @@ Decisions are in [docs/adr/](docs/adr/), open work in `docs/backlog/`.
 uv run pytest                                      # validator tests
 claude plugin validate --strict .                  # marketplace
 claude plugin validate --strict plugins/ai-engineer
+claude plugin validate --strict plugins/finance
 ```
 
 To release a plugin, bump `version` in its `.claude-plugin/plugin.json`.

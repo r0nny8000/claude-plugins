@@ -1,0 +1,11 @@
+{
+  "name": "finance",
+  "description": "Skills for personal finance. scalable-cli: the Scalable Capital broker CLI sc and its documentation",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "r0nny8000"
+  },
+  "homepage": "https://github.com/r0nny8000/claude-plugins",
+  "repository": "https://github.com/r0nny8000/claude-plugins"
+}

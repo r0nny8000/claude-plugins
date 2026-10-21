@@ -10,6 +10,12 @@
       "displayName": "ai-engineer",
       "source": "./plugins/ai-engineer",
       "description": "AI engineering skills: goal-crafter for interview-driven /goal authoring"
+    },
+    {
+      "name": "finance",
+      "displayName": "finance",
+      "source": "./plugins/finance",
+      "description": "Personal finance skills: scalable-cli for the Scalable Capital broker CLI sc"
     }
   ]
 }
