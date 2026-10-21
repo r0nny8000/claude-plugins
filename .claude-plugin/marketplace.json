@@ -7,6 +7,7 @@
   "plugins": [
     {
       "name": "ai-engineer",
+      "displayName": "ai-engineer",
       "source": "./plugins/ai-engineer",
       "description": "AI engineering skills: goal-crafter for interview-driven /goal authoring"
     }

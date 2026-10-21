@@ -1,7 +1,7 @@
 {
   "name": "ai-engineer",
   "description": "Skills for working with Claude Code as an AI engineer. goal-crafter: interview-driven /goal authoring that researches the project, writes a goal file under docs/backlog, and hands over a short /goal line",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "author": {
     "name": "r0nny8000"
