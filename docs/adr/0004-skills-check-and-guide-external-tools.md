@@ -39,8 +39,9 @@ Anthropic's guidance:
 
 - Plugins in this repo don't install external tools and don't bundle
   third-party binaries.
-- A skill that needs a tool runs a check script first (for `sc`:
-  `check_install.py`, which reports `not_installed` and `update_available`).
+- A skill that needs a tool runs a check script first. The script reports
+  at least whether the tool is missing or outdated; for `sc` it's still to
+  be written.
 - If the tool is missing or outdated, the skill shows the install steps for
   the user's OS from a reference file. The user runs them. Claude runs an
   install command only after the user confirms it.
@@ -50,8 +51,8 @@ Anthropic's guidance:
 
 - A first run on a fresh machine needs a manual install step.
 - Install steps live in the skill's reference files and go stale when
-  upstream changes; the check script's `docs_outdated` finding flags this
-  for `sc`.
+  upstream changes. The check script should flag when the installed version
+  is newer than the one the steps were written for.
 - Language-package dependencies, such as Python packages for a skill's own
   scripts, aren't covered here. A `${CLAUDE_PLUGIN_DATA}` install hook stays
   possible for those.

@@ -5,8 +5,7 @@ description: Point to the official documentation of the Scalable CLI `sc`, the c
 
 # Scalable CLI
 
-This skill is a scaffold. Its content will move over from the standalone
-scalable-cli skill in a later step.
+This skill is a scaffold. Building it out is tracked in the repo's backlog.
 
 The official documentation links are in [README.md](README.md). Read it and
 give the user the link that matches their question.
