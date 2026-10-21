@@ -5,8 +5,7 @@ acceptance:
   - uv run pytest passes, including tests for the sc check script
   - claude plugin validate --strict plugins/finance passes
   - on a machine without sc, the skill reports it missing and shows the install steps for that OS without running them
-  - asked "What's my portfolio worth?", Claude runs `sc broker overview --json` unprompted
-  - an attempted `sc broker trade buy ...` is refused by the skill
+  - if sc is installed but not logged in, the skill says so and explains how to log in (enable Agentic Investing on the web platform, run `sc login` yourself) without running `sc login` itself
   - no account ID, portfolio ID or real sc output is tracked by Git
 ---
 
