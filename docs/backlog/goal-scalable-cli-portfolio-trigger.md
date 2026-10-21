@@ -16,7 +16,7 @@ worth?" reliably makes Claude call `sc broker overview --json` through the
 
 - Repo state: branch `add-finance-plugin`; the plugin was added in 84c2384,
   ADR 0004 in b8b05ff, the skill backlog item in 59e3d96.
-- Depends on `docs/backlog/scalable-cli-skill.md` being done (the file is
+- Depends on `docs/backlog/goal-scalable-cli-skill.md` being done (the file is
   deleted when it is). That item builds SKILL.md, the check script and the
   references.
 - Relevant files: `plugins/finance/skills/scalable-cli/SKILL.md` (its
@@ -33,7 +33,7 @@ worth?" reliably makes Claude call `sc broker overview --json` through the
 
 ## Acceptance checklist
 
-- [ ] Preconditions hold — proven by `command -v sc`, `sc whoami >/dev/null && echo logged-in` (prints only `logged-in`), and `test ! -e docs/backlog/scalable-cli-skill.md && echo skill-item-done`
+- [ ] Preconditions hold — proven by `command -v sc`, `sc whoami >/dev/null && echo logged-in` (prints only `logged-in`), and `test ! -e docs/backlog/goal-scalable-cli-skill.md && echo skill-item-done`
 - [ ] Triggering is reliable — proven by `uv run python evals/check_portfolio_trigger.py`, which runs 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance --output-format stream-json --verbose` sessions, prints only the Bash commands each one called, and ends with `3/3 PASS`
 - [ ] The check script is tested — proven by `uv run pytest` exiting 0, with tests for the stream-json parsing in `tests/`
 - [ ] The plugin still validates — proven by `claude plugin validate --strict plugins/finance` printing `Validation passed`
@@ -60,7 +60,7 @@ change, and show their output in the transcript.
 ## Out of scope
 
 - Installing or updating `sc`, running `sc login`.
-- Building the skill (`docs/backlog/scalable-cli-skill.md`).
+- Building the skill (`docs/backlog/goal-scalable-cli-skill.md`).
 - Bumping the version in `plugins/finance/.claude-plugin/plugin.json`.
 - Triggering for prompts other than "What's my portfolio worth?".
 
@@ -84,5 +84,5 @@ None
 ## Condition
 
 ```text
-Preconditions hold: `command -v sc` finds sc, `sc whoami >/dev/null && echo logged-in` prints logged-in, and docs/backlog/scalable-cli-skill.md no longer exists; if any fails, show it and stop. Then `uv run python evals/check_portfolio_trigger.py` shows 3 of 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance` runs calling `sc broker overview --json` and prints 3/3 PASS; `uv run pytest` exits 0 with tests for the check script; `claude plugin validate --strict plugins/finance` passes. Guardrails: no test deleted, skipped or weakened; edits only in plugins/finance/skills/scalable-cli/, evals/, tests/ and this goal file; read-only sc commands only, never sc login, trades or savings-plan changes; never print or commit sc output or account data, raw output goes to a temp dir outside the repo; no new dependencies. Out of scope: installing sc or logging in, building the skill, version bump, other prompts. Show the output of each check in the transcript. Or stop after 20 turns and report what remains.
+Preconditions hold: `command -v sc` finds sc, `sc whoami >/dev/null && echo logged-in` prints logged-in, and docs/backlog/goal-scalable-cli-skill.md no longer exists; if any fails, show it and stop. Then `uv run python evals/check_portfolio_trigger.py` shows 3 of 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance` runs calling `sc broker overview --json` and prints 3/3 PASS; `uv run pytest` exits 0 with tests for the check script; `claude plugin validate --strict plugins/finance` passes. Guardrails: no test deleted, skipped or weakened; edits only in plugins/finance/skills/scalable-cli/, evals/, tests/ and this goal file; read-only sc commands only, never sc login, trades or savings-plan changes; never print or commit sc output or account data, raw output goes to a temp dir outside the repo; no new dependencies. Out of scope: installing sc or logging in, building the skill, version bump, other prompts. Show the output of each check in the transcript. Or stop after 20 turns and report what remains.
 ```
