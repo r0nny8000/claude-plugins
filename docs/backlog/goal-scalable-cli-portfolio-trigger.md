@@ -29,12 +29,17 @@ worth?" reliably makes Claude call `sc broker overview --json` through the
   `--output-format stream-json`, `--allowedTools` and `--max-turns`
   (`claude --help`, v2.1.306). `sc` was not installed when this goal was
   written, so the trigger check has never run.
+- Verified facts (2026-10-29): this account has a claude.ai Scalable
+  connector with portfolio tools. `ENABLE_CLAUDEAI_MCP_SERVERS=false`
+  turns off the claude.ai connectors a terminal session fetches, and
+  `--strict-mcp-config` drops all other MCP servers (code.claude.com/docs/en/mcp,
+  "Disable claude.ai connectors"; `claude --help`, v2.1.312).
 - Files left by validation runs: none.
 
 ## Acceptance checklist
 
 - [ ] Preconditions hold — proven by `command -v sc`, `sc whoami >/dev/null && echo logged-in` (prints only `logged-in`), and `test ! -e docs/backlog/goal-scalable-cli-skill.md && echo skill-item-done`
-- [ ] Triggering is reliable — proven by `uv run python evals/check_portfolio_trigger.py`, which runs 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance --output-format stream-json --verbose` sessions, prints only the Bash commands each one called, and ends with `3/3 PASS`
+- [ ] Triggering is reliable — proven by `uv run python evals/check_portfolio_trigger.py`, which runs 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance --strict-mcp-config --output-format stream-json --verbose` sessions with `ENABLE_CLAUDEAI_MCP_SERVERS=false`, prints only the Bash commands each one called, fails any run with an `mcp__` tool call, and ends with `3/3 PASS`
 - [ ] The check script is tested — proven by `uv run pytest` exiting 0, with tests for the stream-json parsing in `tests/`
 - [ ] The plugin still validates — proven by `claude plugin validate --strict plugins/finance` printing `Validation passed`
 
@@ -56,6 +61,9 @@ change, and show their output in the transcript.
   explicit paths only.
 - No new dependencies: standard library and tools already in
   `pyproject.toml`.
+- No MCP in test sessions: run them with `ENABLE_CLAUDEAI_MCP_SERVERS=false`
+  and `--strict-mcp-config`, so the Scalable connector can't answer
+  instead of `sc`; never call the connector's tools.
 
 ## Out of scope
 
@@ -84,5 +92,5 @@ None
 ## Condition
 
 ```text
-Preconditions hold: `command -v sc` finds sc, `sc whoami >/dev/null && echo logged-in` prints logged-in, and docs/backlog/goal-scalable-cli-skill.md no longer exists; if any fails, show it and stop. Then `uv run python evals/check_portfolio_trigger.py` shows 3 of 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance` runs calling `sc broker overview --json` and prints 3/3 PASS; `uv run pytest` exits 0 with tests for the check script; `claude plugin validate --strict plugins/finance` passes. Guardrails: no test deleted, skipped or weakened; edits only in plugins/finance/skills/scalable-cli/, evals/, tests/ and this goal file; read-only sc commands only, never sc login, trades or savings-plan changes; never print or commit sc output or account data, raw output goes to a temp dir outside the repo; no new dependencies. Out of scope: installing sc or logging in, building the skill, version bump, other prompts. Show the output of each check in the transcript. Or stop after 20 turns and report what remains.
+Preconditions hold: `command -v sc` finds sc, `sc whoami >/dev/null && echo logged-in` prints logged-in, and docs/backlog/goal-scalable-cli-skill.md no longer exists; if any fails, show it and stop. Then `uv run python evals/check_portfolio_trigger.py` shows 3 of 3 fresh `claude -p "What's my portfolio worth?" --plugin-dir plugins/finance --strict-mcp-config` runs with ENABLE_CLAUDEAI_MCP_SERVERS=false calling `sc broker overview --json`, none calling an mcp__ tool, and prints 3/3 PASS; `uv run pytest` exits 0 with tests for the check script; `claude plugin validate --strict plugins/finance` passes. Guardrails: no test deleted, skipped or weakened; edits only in plugins/finance/skills/scalable-cli/, evals/, tests/ and this goal file; read-only sc commands only, never sc login, trades or savings-plan changes; never print or commit sc output or account data, raw output goes to a temp dir outside the repo; no new dependencies; test sessions run without MCP servers or claude.ai connectors and never use the Scalable connector. Out of scope: installing sc or logging in, building the skill, version bump, other prompts. Show the output of each check in the transcript. Or stop after 20 turns and report what remains.
 ```
