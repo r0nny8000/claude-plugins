@@ -102,12 +102,15 @@ uv run python evals/measure_triggers.py evals/trigger-goal-crafter.json claude-o
 
 For the uninstalled finance plugin, name the skill and the plugin folder.
 `check_install_guidance.py` runs one session on a machine without `sc` and
-passes when Claude shows the install steps without running them:
+passes when Claude shows the install steps without running them.
+`check_install_script.py` asks for the one-time install script, checks
+`/tmp/sc-install.sh` without running it (only `bash -n`) and removes it:
 
 ```bash
 uv run python evals/measure_triggers.py evals/trigger-scalable-cli.json claude-opus-5-5 /tmp/scalable-cli.json \
   --skill scalable-cli --plugin-dir plugins/finance
 uv run python evals/check_install_guidance.py
+uv run python evals/check_install_script.py
 ```
 
 Test sessions run with `ENABLE_CLAUDEAI_MCP_SERVERS=false` and

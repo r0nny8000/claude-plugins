@@ -13,8 +13,8 @@ with its releases (ADR 0005). Fetch them each time you need them.
 | Verify a download (optional) | Linked from the Install section (verify release artifacts)                                                                                      |
 | Enable the CLI and log in    | Same README, section Quick start                                                                                                                |
 
-Fetch the README with WebFetch and ask for the Install section word for
-word, with every code block. WebFetch otherwise returns a summary, and you
+Fetch the README with WebFetch, not `curl` in Bash, and ask for the Install
+section word for word, with every code block. WebFetch otherwise returns a summary, and you
 can't tell which commands upstream actually gives. If the Install section
 points elsewhere, for example to a docs page or a package manager, follow
 that link the same way.

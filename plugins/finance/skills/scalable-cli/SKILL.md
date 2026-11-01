@@ -29,9 +29,14 @@ Handle each finding before going on:
 | `not_logged_in`     | First enable Agentic Investing on the Scalable web platform (Profile > Security), then run `sc login` yourself in your own terminal, not through Claude   |
 | `refresh_retryable` | Temporary session refresh error; run the check once more                                                                                                  |
 
+After showing install or update steps, ask the user (with AskUserQuestion
+when available) whether you should write a one-time install script they run
+and that deletes itself afterwards. If they say yes, or asked for one,
+follow [install-script.md](references/install-script.md). Never run it.
+
 With an empty `findings` list, sc is ready. A user who only asked whether sc
-is installed gets the answer and, if it's missing, the install steps; stop
-there.
+is installed gets the answer and, if it's missing, the install steps and
+the script offer; stop there.
 
 ## 2. Read data
 
