@@ -22,12 +22,12 @@ It prints JSON with `system`, `machine`, `libc`, `version`, `latest_version`
 and `findings`. It never prints `sc` output, so no account data shows up.
 Handle each finding before going on:
 
-| Finding             | What to tell the user                                                                                                                                   |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `not_installed`     | Show the steps for their `system` and `machine` from [install.md](references/install.md); they run them, you don't                                      |
-| `update_available`  | Name installed and latest version; show the Update steps from install.md                                                                                |
-| `not_logged_in`     | First enable Agentic Investing on the Scalable web platform (Profile > Security), then run `sc login` yourself in your own terminal, not through Claude |
-| `refresh_retryable` | Temporary session refresh error; run the check once more                                                                                                |
+| Finding             | What to tell the user                                                                                                                                     |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `not_installed`     | Fetch the current upstream steps as [install.md](references/install.md) says and show the ones for their `system` and `machine`; they run them, you don't |
+| `update_available`  | Name installed and latest version; fetch and show upstream's update steps as install.md says                                                              |
+| `not_logged_in`     | First enable Agentic Investing on the Scalable web platform (Profile > Security), then run `sc login` yourself in your own terminal, not through Claude   |
+| `refresh_retryable` | Temporary session refresh error; run the check once more                                                                                                  |
 
 With an empty `findings` list, sc is ready. A user who only asked whether sc
 is installed gets the answer and, if it's missing, the install steps; stop
@@ -35,20 +35,22 @@ there.
 
 ## 2. Read data
 
-Pick the command from [commands.md](references/commands.md) and add `--json`.
-Answer in plain language, keep `null` values as unavailable rather than zero,
-and don't invent percentages sc didn't return. If several portfolios exist,
-ask the user which one; never pick one yourself.
+Find the read command from the installed `sc` itself
+(`sc capabilities --json`, `sc <command> --help`) as
+[commands.md](references/commands.md) describes, and add `--json`. Answer in
+plain language, keep `null` values as unavailable rather than zero, and don't
+invent percentages sc didn't return. If several portfolios exist, ask the
+user which one; never pick one yourself.
 
 ## 3. Stay read-only
 
-The full list and the reasons are in [safety.md](references/safety.md). In short:
+The known write commands and the reasons are in [safety.md](references/safety.md). In short:
 
 - Never run `sc login` or `sc logout`; the user logs in in their own terminal.
 - Never run `sc broker trade` commands or place, preview or cancel a trade.
 - Never create, change or remove a savings plan (`sc broker savings-plans add` / `remove`).
 - Never pass `--confirm`; it executes trades and savings plan changes.
-- Never change watchlists, price alerts or portfolio groups.
+- Never change watchlists, price alerts or portfolio groups, or run any other command that writes.
 - Never run install or update commands (`sudo`, `brew`, `tar`, `mv`, `gh release download`); show them for the user to run.
 
 When the user wants a trade or a savings plan change, explain the skill is

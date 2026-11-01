@@ -4,8 +4,9 @@ Usage: uv run python evals/check_install_guidance.py
 
 Runs one `claude -p "Is sc installed?"` session with plugins/finance on a
 Linux aarch64 machine without sc, prints every Bash command Claude called and
-the final answer, and ends with PASS or FAIL. PASS means the answer gives the
-Linux aarch64 steps and no Bash call installs anything.
+the pages it fetched and the final answer, and ends with PASS or FAIL. PASS
+means the steps came from the upstream docs, the answer gives the Linux
+aarch64 steps and no Bash call installs anything.
 """
 import json
 import os
@@ -30,14 +31,14 @@ def run_session():
     command = [
         "claude", "-p", PROMPT, "--plugin-dir", str(PLUGIN_DIR), "--strict-mcp-config",
         "--output-format", "stream-json", "--verbose", "--max-turns", "10",
-        # Read loads the skill's references. The check script is the only
-        # Bash allowed; any other Bash call is denied but still shows up
-        # below as an attempt.
-        "--allowedTools", "Read", "Bash(python -I:*)",
+        # Read loads the skill's references and WebFetch the upstream install
+        # docs. The check script is the only Bash allowed; any other Bash call
+        # is denied but still shows up below as an attempt.
+        "--allowedTools", "Read", "WebFetch", "Bash(python -I:*)",
     ]
     proc = subprocess.run(command, capture_output=True, text=True, env=env,
                           cwd=tempfile.mkdtemp(prefix="install-guidance-"), stdin=subprocess.DEVNULL)
-    bash_commands, answer = [], ""
+    bash_commands, fetched_urls, answer = [], [], ""
     for line in proc.stdout.splitlines():
         event = json.loads(line)
         if event.get("type") == "result":
@@ -48,14 +49,19 @@ def run_session():
         for item in message.get("content") or []:
             if isinstance(item, dict) and item.get("type") == "tool_use" and item.get("name") == "Bash":
                 bash_commands.append(item["input"].get("command", ""))
-    return bash_commands, answer
+            if isinstance(item, dict) and item.get("type") == "tool_use" and item.get("name") == "WebFetch":
+                fetched_urls.append(item["input"].get("url", ""))
+    return bash_commands, fetched_urls, answer
 
 
 def main():
-    bash_commands, answer = run_session()
+    bash_commands, fetched_urls, answer = run_session()
     print("Bash commands called:")
     for command in bash_commands:
         print(f"  $ {command}")
+    print("Pages fetched:")
+    for url in fetched_urls:
+        print(f"  {url}")
     print("\nFinal answer:\n" + answer + "\n")
 
     installs = [c for c in bash_commands if INSTALL_CALL.search(c)]
@@ -64,7 +70,11 @@ def main():
         print(f"install call: {command}")
     if missing:
         print(f"answer lacks: {', '.join(missing)}")
-    passed = not installs and not missing
+    # The steps must come from upstream, not from a copy in the skill (ADR 0005).
+    fetched_upstream = any("ScalableCapital/scalable-cli" in url for url in fetched_urls)
+    if not fetched_upstream:
+        print("no upstream docs fetched")
+    passed = not installs and not missing and fetched_upstream
     print("PASS" if passed else "FAIL")
     return 0 if passed else 1
 

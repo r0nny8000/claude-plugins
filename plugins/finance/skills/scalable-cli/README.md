@@ -6,15 +6,16 @@ Scalable Capital.
 
 ## Requirements
 
-The skill doesn't install anything. It checks for `sc` and shows the install
-steps for your system; you run them.
+The skill doesn't install anything. It checks for `sc`, fetches the current
+install steps from the upstream README and shows the ones for your system;
+you run them.
 
 | Requirement          | Needed   | Notes                                                                                   |
 |----------------------|----------|-----------------------------------------------------------------------------------------|
-| `sc`, latest release | required | macOS: Homebrew or PKG. Linux: tarball for `x86_64` or `aarch64`, binary on your `PATH` |
-| Scalable CLI enabled | required | On the Scalable web platform under Profile > Security > Agentic Investing               |
+| `sc`, latest release | required | Install as the upstream README's Install section describes (link below)                 |
+| Scalable CLI enabled | required | On the Scalable web platform, see the upstream Quick start                              |
 | `sc login`           | required | Run it yourself, not through Claude; `sc login --local-read-only` blocks write commands |
-| `gh`, `minisign`     | optional | Download a release and verify its signed checksums                                      |
+| Network access       | required | The skill fetches the install steps and checks for the latest release on GitHub        |
 
 ## Scalable CLI documentation
 
