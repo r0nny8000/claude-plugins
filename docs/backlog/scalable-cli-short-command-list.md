@@ -25,10 +25,33 @@ the latest version of that manual.
 Upstream manual:
 https://github.com/ScalableCapital/scalable-cli/blob/main/public-docs/commands.md
 
+## Evidence from the portfolio-trigger goal (2026-11-01)
+
+In 3 of 3 runs of `evals/check_portfolio_trigger.py`, asking "What's my
+portfolio worth?" led to the same commands in the same order:
+
+1. The skill's check script (`check_install.py`)
+2. `sc capabilities --json`
+3. `sc broker overview --json`
+4. `sc broker cash-breakdown --json`
+
+So Claude already finds the basic commands through `sc`'s help. This item
+makes them explicit in the skill anyway, so the common questions don't
+depend on discovery.
+
+`sc broker cash-breakdown --json` reads only, but it was blocked because
+the eval's `ALLOWED_TOOLS` list doesn't include it. The eval's checks
+don't depend on it. When the short list is final, add its commands to
+`ALLOWED_TOOLS` too.
+
 ## Changes
 
-- Add a short list of basic read commands to `references/commands.md`
-  (for example overview, holdings, cash, transactions). Keep it small.
+- Add a short list of basic read commands to the skill. Keep it small.
+  Start with the two the runs used: `sc broker overview --json` and
+  `sc broker cash-breakdown --json`; candidates to add are holdings and
+  transactions. Name them in `SKILL.md` itself, not only in
+  `references/commands.md`, so Claude sees them without opening another
+  file.
 - For any request the short list doesn't cover, use the installed `sc`'s
   own help first, then the upstream manual, then anything else (decided
   2026-11-01):
@@ -64,7 +87,8 @@ Options:
 
 ## Acceptance criteria
 
-- `references/commands.md` holds the short list and no other commands.
+- `SKILL.md` names the short list explicitly; the skill lists no other
+  commands.
 - A question covered by the list runs the listed command without
   fetching the manual.
 - A question outside the list makes Claude run `sc`'s help first and
