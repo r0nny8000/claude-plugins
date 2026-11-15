@@ -101,9 +101,9 @@ def run_session(raw_path, prompt=PROMPT, allowed_tools=ALLOWED_TOOLS):
         "--output-format", "stream-json", "--verbose", "--max-turns", "10",
         "--permission-mode", "default", "--allowedTools", *allowed_tools,
     ]
-    with open(raw_path, "w") as raw:
+    with open(raw_path, "w") as raw, tempfile.TemporaryDirectory(prefix="portfolio-trigger-") as work_dir:
         subprocess.run(command, stdout=raw, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, text=True,
-                       env=env, cwd=tempfile.mkdtemp(prefix="portfolio-trigger-"))
+                       env=env, cwd=work_dir)
     with open(raw_path) as raw:
         return parse_run(raw)
 

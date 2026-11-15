@@ -88,3 +88,16 @@ def test_listed_commands_are_allowed():
     tools = load_module().ALLOWED_TOOLS
     assert "Bash(sc broker cash-breakdown:*)" in tools
     assert "Bash(sc broker holdings:*)" in tools
+
+
+def test_session_working_folder_is_removed_after_the_run(tmp_path, monkeypatch):
+    module = load_module()
+    used = []
+
+    def fake_run(command, cwd, **kwargs):
+        used.append(Path(cwd))
+        assert Path(cwd).is_dir()
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+    module.run_session(tmp_path / "run-1.jsonl")
+    assert used and not used[0].exists()
