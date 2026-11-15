@@ -10,8 +10,7 @@ acceptance: scalable-cli stores only a short list of the most used basic sc read
 
 Don't implement or list every `sc` function in the skill. Store only a
 small number of the most used basic read commands, so common questions
-are answered fast. For everything else, check the upstream manual on
-GitHub to find the best command for the user's request, and always use
+are answered fast. For everything else, use `sc --help`, `sc <command> --help`, `sc capabilities`,and check the upstream manual on GitHub to find the best command for the user's request, and always use
 the latest version of that manual.
 
 ## Current state (checked 2026-11-01)
@@ -31,9 +30,9 @@ In 3 of 3 runs of `evals/check_portfolio_trigger.py`, asking "What's my
 portfolio worth?" led to the same commands in the same order:
 
 1. The skill's check script (`check_install.py`)
-2. `sc capabilities --json`
-3. `sc broker overview --json`
-4. `sc broker cash-breakdown --json`
+1. `sc capabilities --json`
+1. `sc broker overview --json`
+1. `sc broker cash-breakdown --json`
 
 So Claude already finds the basic commands through `sc`'s help. This item
 makes them explicit in the skill anyway, so the common questions don't
@@ -56,9 +55,9 @@ don't depend on it. When the short list is final, add its commands to
   own help first, then the upstream manual, then anything else (decided
   2026-11-01):
   1. `sc capabilities` lists the CLI's capabilities.
-  2. `sc help <subcommand>` or `sc <subcommand> --help` prints the full
+  1. `sc help <subcommand>` or `sc <subcommand> --help` prints the full
      help; `-h` prints a summary.
-  3. Only if the help doesn't answer it: fetch the upstream manual from
+  1. Only if the help doesn't answer it: fetch the upstream manual from
      the `main` branch, never a cached or copied version.
 - Compose the command from what the help shows, to fit the user's
   request (subcommand, flags, `--json`).
