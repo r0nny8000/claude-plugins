@@ -1,6 +1,6 @@
 ---
 name: scalable-cli
-description: Read-only helper for the Scalable CLI `sc`, the official command line of the Scalable Capital broker. Checks whether sc is installed, current and logged in, shows the install steps for the user's OS, and runs sc read commands for the Scalable depot or portfolio - holdings, overview, cash, transactions, quotes, savings plans, Overnight and Fixed-Term savings. Use it whenever the user mentions Scalable, Scalable Capital, their Scalable depot, portfolio or broker account, or the sc CLI, even if they don't say "skill". It never logs in, trades or changes savings plans.
+description: Read-only helper for the Scalable CLI `sc`, the official command line of the Scalable Capital broker. Checks whether sc is installed, current and logged in, shows the install steps for the user's OS, and runs sc read commands for the Scalable depot or portfolio - holdings, overview, cash, transactions, quotes, savings plans, Overnight and Fixed-Term savings. Use it whenever the user mentions Scalable, Scalable Capital, their Scalable depot, portfolio or broker account, or the sc CLI; whenever they want to buy or sell a stock, ETF or other security (it can't trade, so it says so and points to the Scalable app); and whenever they want a quote, price or other data for a stock or ETF, for example by ISIN - even if they don't say "skill" or name Scalable. It never logs in, trades or changes savings plans.
 ---
 
 # Scalable CLI (read-only)

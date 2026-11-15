@@ -11,6 +11,11 @@
   {"query": "how did my scalable portfolio do this year? show me the ytd chart numbers", "should_trigger": true},
   {"query": "buy 2 shares of apple in my Scalable Capital depot using the sc cli", "should_trigger": true},
   {"query": "get me a quote for IE00B4L5Y983 through the scalable broker CLI", "should_trigger": true},
+  {"query": "buy 10 shares of Microsoft for me, limit at 380 euros if that's possible", "should_trigger": true},
+  {"query": "i want to sell my MSCI World ETF, the whole position, prices look good today", "should_trigger": true},
+  {"query": "get me the current data for the stock with ISIN US0378331005, price and how it did this year", "should_trigger": true},
+  {"query": "what's IE00B4L5Y983 trading at right now?", "should_trigger": true},
+  {"query": "kauf mir für 500 € den Vanguard FTSE All-World, der soll ins Depot", "should_trigger": true},
   {"query": "sc query wuauserv keeps saying access denied on my windows server, how do I check the service status as admin", "should_trigger": false},
   {"query": "build me a portfolio website in Next.js with a projects grid and a dark mode toggle, my repo is in ~/code/portfolio-site", "should_trigger": false},
   {"query": "our kubernetes deployment needs to scale from 3 to 10 replicas when CPU goes above 70%, write the HPA yaml", "should_trigger": false},
@@ -22,5 +27,8 @@
   {"query": "the scalability of our postgres write path is bad, profile the inserts in src/db/writer.py and suggest batching", "should_trigger": false},
   {"query": "add a Depot model to our Django inventory app: a warehouse depot has a name, address and many Trucks", "should_trigger": false},
   {"query": "how do I configure depot.dev as a remote docker builder in our github actions workflow", "should_trigger": false},
-  {"query": "explain what a broker is in kafka and how many brokers our 3-node cluster in infra/kafka.tf needs for replication factor 3", "should_trigger": false}
+  {"query": "explain what a broker is in kafka and how many brokers our 3-node cluster in infra/kafka.tf needs for replication factor 3", "should_trigger": false},
+  {"query": "what exactly is an ISIN and how is the check digit at the end calculated? an example with US0378331005 would help", "should_trigger": false},
+  {"query": "write a python function in utils/isin.py that validates an ISIN including the luhn check digit, with pytest tests", "should_trigger": false},
+  {"query": "should I buy ETFs or single stocks as a beginner with 200 euros a month? explain the pros and cons", "should_trigger": false}
 ]
