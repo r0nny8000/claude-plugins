@@ -10,7 +10,7 @@ acceptance: scalable-cli stores only a short list of the most used basic sc read
 
 Don't implement or list every `sc` function in the skill. Store only a
 small number of the most used basic read commands, so common questions
-are answered fast. For everything else, use `sc --help`, `sc <command> --help`, `sc capabilities`,and check the upstream manual on GitHub to find the best command for the user's request, and always use
+are answered fast. For everything else, use `sc --help`, `sc <command> --help`, `sc capabilities`, and check the upstream manual on GitHub to find the best command for the user's request, and always use
 the latest version of that manual.
 
 ## Current state (checked 2026-11-01)
