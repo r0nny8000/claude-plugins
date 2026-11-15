@@ -1,15 +1,8 @@
 # Find and run sc read commands
 
-Commands change between `sc` releases, so ask the installed `sc` instead of
-relying on a list (ADR 0005).
-
-## Discover
-
-1. `sc capabilities --json` lists the commands this version supports.
-2. `sc <command> --help` gives a command's flags, for example
-   `sc broker --help` or `sc broker holdings --help`.
-3. If neither answers the question, the upstream command reference has
-   examples: https://github.com/ScalableCapital/scalable-cli/blob/main/public-docs/commands.md
+Commands change between `sc` releases. SKILL.md lists the three commands
+run directly and says how to find any other one from the installed `sc`'s
+help, with the upstream manual as fallback (ADR 0005, ADR 0006).
 
 Pick a command that only reads, add `--json`, and check
 [safety.md](safety.md) before running anything that could write. Help output

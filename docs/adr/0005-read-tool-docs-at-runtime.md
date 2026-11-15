@@ -1,6 +1,6 @@
 # 0005 Skills read install steps and commands at runtime, not from a copy
 
-Status: accepted
+Status: accepted, partly superseded by 0006 (3 listed read commands)
 Date: 2026-11-01
 
 ## Context

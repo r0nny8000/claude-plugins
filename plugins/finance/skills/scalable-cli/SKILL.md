@@ -22,12 +22,12 @@ It prints JSON with `system`, `machine`, `libc`, `version`, `latest_version`
 and `findings`. It never prints `sc` output, so no account data shows up.
 Handle each finding before going on:
 
-| Finding             | What to tell the user                                                                                                                                     |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `not_installed`     | Fetch the current upstream steps as [install.md](references/install.md) says and show the ones for their `system` and `machine`; they run them, you don't |
-| `update_available`  | Name installed and latest version; fetch and show upstream's update steps as install.md says                                                              |
-| `not_logged_in`     | First enable Agentic Investing on the Scalable web platform (Profile > Security), then run `sc login` yourself in your own terminal, not through Claude   |
-| `refresh_retryable` | Temporary session refresh error; run the check once more                                                                                                  |
+| Finding               | What to tell the user                                                                                                                                                                               |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `not_installed`       | Fetch the current upstream steps as [install.md](references/install.md) says and show the ones for their `system` and `machine`; they run them, you don't                                           |
+| `update_available`    | Name installed and latest version. For a data request, say so in one line and go on; fetch and show upstream's update steps as install.md says only when the user asks about installing or updating |
+| `not_logged_in`       | First enable Agentic Investing on the Scalable web platform (Profile > Security), then run `sc login` yourself in your own terminal, not through Claude                                             |
+| `refresh_retryable`   | Temporary session refresh error; run the check once more                                                                                                                                            |
 
 After showing install or update steps, ask the user (with AskUserQuestion
 when available) whether you should write a one-time install script they run
@@ -40,14 +40,55 @@ the script offer; stop there.
 
 ## 2. Read data
 
-Find the read command from the installed `sc` itself
-(`sc capabilities --json`, `sc <command> --help`) as
-[commands.md](references/commands.md) describes, and add `--json`. Answer in
-plain language, keep `null` values as unavailable rather than zero, and don't
-invent percentages sc didn't return. If several portfolios exist, ask the
-user which one; never pick one yourself.
+These three commands are known to work. Run them directly, without
+`sc capabilities` or help first:
 
-## 3. Stay read-only
+| Request                                   | Command                           |
+|-------------------------------------------|-----------------------------------|
+| Portfolio value, performance, overview    | `sc broker overview --json`       |
+| Cash, buying power                        | `sc broker cash-breakdown --json` |
+| Positions, holdings                       | `sc broker holdings --json`       |
+
+For any other request, compose the command from `sc`'s help as section 3
+describes. If a listed command is unknown to the installed `sc` (missing
+from `sc capabilities --json` or its help), find the current one through
+help as well and tell the user the skill's list is out of date.
+
+Answer in plain language, keep `null` values as unavailable rather than
+zero, and don't invent percentages sc didn't return. If several portfolios
+exist, ask the user which one; never pick one yourself. Portfolio
+selection, output and errors are in [commands.md](references/commands.md).
+
+## 3. Getting help
+
+For a request the list doesn't cover, the installed `sc`'s built-in help is
+always the first step; it describes exactly the version the user has.
+
+| Form                                 | Shows                                                                                                      |
+|--------------------------------------|------------------------------------------------------------------------------------------------------------|
+| `sc --help` or `sc -h`               | Top-level commands                                                                                         |
+| `sc help <command>`                  | Help for a command or subcommand, for example `sc help broker` or `sc help broker quote`                   |
+| `sc <command> --help` or `-h`        | Usage and every option with accepted values and defaults, for example `sc broker quote --help`             |
+| `sc capabilities --json`             | Every command as a dotted name (`broker.quote` is `sc broker quote`), exit codes and multi-step workflows  |
+
+Options have no help of their own: each option is explained in its
+command's help, with its accepted values and default.
+
+From request to command:
+
+1. Find the command in `sc capabilities --json` or in a parent's help, for
+   example `sc broker --help`.
+2. Read that command's `--help` for its flags.
+3. Compose the command with `--json`, check [safety.md](references/safety.md)
+   that it only reads, then run it.
+
+Fallback only when that help doesn't answer the request: fetch the upstream
+manual from the `main` branch,
+https://github.com/ScalableCapital/scalable-cli/blob/main/public-docs/commands.md,
+never a copy. If the fetch fails, say so, give the link, and stop without
+running a guessed command.
+
+## 4. Stay read-only
 
 The known write commands and the reasons are in [safety.md](references/safety.md). In short:
 
